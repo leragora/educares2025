@@ -197,8 +197,8 @@ p.col-break-before::before {
 .scroll { overflow:auto; }
 .scroll-vert { overflow-y:auto; overflow-x:hidden; }
 .scroll-horiz { overflow-x:auto; overflow-y:hidden; }
-.scroll-vert::-webkit-scrollbar { -webkit-appearance:none; width:7px; } /*add back scrollbar for webkit*/
-.scroll-vert::-webkit-scrollbar-thumb { border-radius:4px; background-color:rgba(0,0,0,.5); }
+.scroll-vert::-webkit-scrollbar { -webkit-appearance:none; width:6px; border-radius:10px; background-color:rgba(0,0,0,.2);} /*add back scrollbar for webkit*/
+.scroll-vert::-webkit-scrollbar-thumb { border-radius:10px; background-color:rgba(0,0,0,.7); }
 .hidescroll::-webkit-scrollbar { display:none; }
 .hidescroll { -ms-overflow-style:none; overflow:-moz-scrollbars-none;/*old FF*/ }
 .pulltab-left, .pulltab-left > * {
@@ -493,7 +493,6 @@ body, #container-wrap { background:#ededed; }
 	height:510px !important;
 	left:57px !important;
 	top:170px !important;
-	background:#4c77ba;
 }
 
 #item1402 {
@@ -515,7 +514,6 @@ body, #container-wrap { background:#ededed; }
 	height:510px !important;
 	left:57px !important;
 	top:170px !important;
-	background:#4c77ba;
 }
 
 #item1378 {
@@ -657,7 +655,14 @@ p.capitular-azul {
 	margin-bottom:10px;
 	text-align:left;
 }
-
+p.capitular-azul:first-child:first-letter {
+    font-size: 5.5em;      /* Tamanho */
+    font-weight: 800;   /* peso */
+    color: #372A84;      /* Cor */
+    float: left;         /* Alinha a letra à esquerda */
+    margin-right: 0.1em; /* Espaçamento entre a letra e o texto */
+    line-height: 1;      /* Ajuste de altura para evitar desalinhamento */
+}
 p.legenda {
 	font-weight:bold;
 	font-family:Manrope;
