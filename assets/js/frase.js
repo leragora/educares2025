@@ -54,9 +54,8 @@ const animationConfigs = {
   // Caso contrário, você pode remover as configurações de animações não utilizadas.
 };
 
-// Função para lidar com a mudança de estado do Multi-State Object
+// Função para ativar/desativar animações com base no estado ativo
 function handleMultiStateChange() {
-  // ATUALIZADO: ID do MSO principal para 'item1330'
   const multiStateElement = document.getElementById('item1330'); 
   if (!multiStateElement) {
     console.warn("MSO com ID 'item1330' não encontrado.");
