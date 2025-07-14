@@ -35,41 +35,75 @@ function createLottieAnimation(containerId, animationPath) {
 }
 
 // Configuração das animações Lottie
-// As chaves do objeto (ex: 'frase01-state', 'frase02-state') devem corresponder
-// ao atributo 'name' das divs de estado dentro do seu MSO no HTML.
-// Os 'containerId's foram ajustados para 'item1364', 'item1391', 'item1609', 'item1636'.
+// As chaves do objeto (ex: 'frase01') podem ser usadas como identificadores lógicos
 const animationConfigs = {
-  'frase01': { containerId: 'item1364', path: './assets/frase01.json' },
-  'frase02': { containerId: 'item1391', path: './assets/frase02.json' },
-
-  'frase03': { containerId: 'item1609', path: './assets/frase03.json' },
-  'frase04': { containerId: 'item1636', path: './assets/frase04.json' }
+  frase01: { containerId: 'item1364', path: './assets/frase01.json' },
+  frase02: { containerId: 'item1391', path: './assets/frase02.json' },
+  frase03: { containerId: 'item1609', path: './assets/frase03.json' },
+  frase04: { containerId: 'item1636', path: './assets/frase04.json' }
 };
 
-// Função para manipular a mudança de estado do MSO e reproduzir a animação Lottie correspondente
+// Função para lidar com mudanças de estado dos elementos multi-estado (slideshows)
 function handleMultiStateChange() {
-  const states = document.querySelectorAll('.pageItem.state');
+  console.log('Multi-state element state changed. Checking Lottie animations.');
 
-  states.forEach(state => {
-    const isActive = state.classList.contains('active') && state.getAttribute('aria-hidden') === 'false';
-    const stateName = state.getAttribute('name');
-    const config = animationConfigs[stateName];
+  // Verifica o estado do slideshow principal (item1330)
+  const slideshow1 = document.getElementById('item1330');
+  // Verifica o estado do segundo slideshow (item1553)
+  const slideshow2 = document.getElementById('item1553');
 
-    if (config) {
-      const animation = createLottieAnimation(config.containerId, config.path);
-
-      if (animation) {
-        if (isActive) {
-          animation.play();
-        } else {
-          animation.stop();
-        }
-      }
+  // Lógica para frase01
+  const animation1 = createLottieAnimation(animationConfigs.frase01.containerId, animationConfigs.frase01.path);
+  if (animation1) {
+    // Exemplo: reproduzir frase01 se slideshow1 tiver um filho com a classe 'active'
+    if (slideshow1 && slideshow1.querySelector('.state.active')) {
+      animation1.goToAndPlay(0, true); // Reinicia e reproduz
+      console.log('Reproduzindo frase01.json');
+    } else {
+      animation1.stop(); // Para se a condição não for atendida
     }
-  });
+  }
+
+  // Lógica para frase02
+  const animation2 = createLottieAnimation(animationConfigs.frase02.containerId, animationConfigs.frase02.path);
+  if (animation2) {
+    // Exemplo: reproduzir frase02 se slideshow1 tiver um filho com a classe 'other_state'
+    // Você precisará ajustar 'other_state' para a classe que indica o estado correto para esta animação
+    if (slideshow1 && slideshow1.querySelector('.state.someOtherActiveState')) { // <<< AJUSTE ESTA CONDIÇÃO
+      animation2.goToAndPlay(0, true);
+      console.log('Reproduzindo frase02.json');
+    } else {
+      animation2.stop();
+    }
+  }
+
+  // Lógica para frase03
+  const animation3 = createLottieAnimation(animationConfigs.frase03.containerId, animationConfigs.frase03.path);
+  if (animation3) {
+    // Exemplo: reproduzir frase03 se slideshow2 tiver um filho com a classe 'active'
+    if (slideshow2 && slideshow2.querySelector('.state.active')) {
+      animation3.goToAndPlay(0, true);
+      console.log('Reproduzindo frase03.json');
+    } else {
+      animation3.stop();
+    }
+  }
+
+  // Lógica para frase04
+  const animation4 = createLottieAnimation(animationConfigs.frase04.containerId, animationConfigs.frase04.path);
+  if (animation4) {
+    // Exemplo: reproduzir frase04 se slideshow2 tiver um filho com a classe 'another_state'
+    // Você precisará ajustar 'another_state' para a classe que indica o estado correto para esta animação
+    if (slideshow2 && slideshow2.querySelector('.state.anotherActiveState')) { // <<< AJUSTE ESTA CONDIÇÃO
+      animation4.goToAndPlay(0, true);
+      console.log('Reproduzindo frase04.json');
+    } else {
+      animation4.stop();
+    }
+  }
 }
 
-// Observador de mutação para detectar mudanças no atributo 'aria-hidden' ou na classe 'active'
+// Configura os MutationObservers para detectar mudanças no atributo 'aria-hidden' ou na classe 'active'
 document.addEventListener('DOMContentLoaded', function() {
   const slideshow1 = document.getElementById('item1330'); // Original ID from frases-01.js
   const slideshow2 = document.getElementById('item1553'); // Original ID from frases-02.js
@@ -79,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
       mutations.forEach(mutation => {
         if (mutation.type === 'attributes' && (mutation.attributeName === 'aria-hidden' || mutation.attributeName === 'class')) {
           const targetElement = mutation.target;
+          // Verifica se a mudança ocorreu em um elemento com a classe 'state'
+          // Isso é comum em slideshows onde 'state active' indica o slide atual
           if (targetElement.classList.contains('state')) {
             handleMultiStateChange();
           }
@@ -87,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     observer1.observe(slideshow1, {
       attributes: true,
-      subtree: true,
+      subtree: true, // Observa mudanças em elementos filhos também
       attributeFilter: ['aria-hidden', 'class']
     });
   }
@@ -109,4 +145,9 @@ document.addEventListener('DOMContentLoaded', function() {
       attributeFilter: ['aria-hidden', 'class']
     });
   }
+
+  // Chama handleMultiStateChange uma vez na carga inicial, caso já haja um estado ativo
+  // Isso garante que as animações sejam carregadas e possivelmente reproduzidas
+  // se o estado inicial já satisfizer as condições.
+  handleMultiStateChange();
 });
