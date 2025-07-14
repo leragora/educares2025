@@ -69,7 +69,7 @@ function handleMultiStateChange() {
   if (animation2) {
     // Exemplo: reproduzir frase02 se slideshow1 tiver um filho com a classe 'other_state'
     // Você precisará ajustar 'other_state' para a classe que indica o estado correto para esta animação
-    if (slideshow1 && slideshow1.querySelector('.state.someOtherActiveState')) { // <<< AJUSTE ESTA CONDIÇÃO
+    if (slideshow1 && slideshow1.querySelector('.state.active')) { // <<< AJUSTE ESTA CONDIÇÃO
       animation2.goToAndPlay(0, true);
       console.log('Reproduzindo frase02.json');
     } else {
@@ -94,7 +94,7 @@ function handleMultiStateChange() {
   if (animation4) {
     // Exemplo: reproduzir frase04 se slideshow2 tiver um filho com a classe 'another_state'
     // Você precisará ajustar 'another_state' para a classe que indica o estado correto para esta animação
-    if (slideshow2 && slideshow2.querySelector('.state.anotherActiveState')) { // <<< AJUSTE ESTA CONDIÇÃO
+    if (slideshow2 && slideshow2.querySelector('.state.active')) { // <<< AJUSTE ESTA CONDIÇÃO
       animation4.goToAndPlay(0, true);
       console.log('Reproduzindo frase04.json');
     } else {
