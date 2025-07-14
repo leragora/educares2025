@@ -37,32 +37,18 @@ function createLottieAnimation(containerId, animationPath) {
 // Configuração das animações Lottie
 // As chaves do objeto (ex: 'frase01-state', 'frase02-state') devem corresponder
 // ao atributo 'name' das divs de estado dentro do seu MSO no HTML.
-// Os 'containerId's foram ajustados para 'item1364' e 'item1391'.
+// Os 'containerId's foram ajustados para 'item1364', 'item1391', 'item1609', 'item1636'.
 const animationConfigs = {
-  // ATENÇÃO: SUBSTITUA 'nome-do-estado-da-frase01' PELO 'name' REAL DO SEU ESTADO NO HTML
-  'frase01': { 
-    containerId: 'item1364', // ID do div onde a animação frase01.json será renderizada
-    path: './assets/frase01.json' // Caminho para o arquivo JSON da animação
-  },
-  // ATENÇÃO: SUBSTITUA 'nome-do-estado-da-frase02' PELO 'name' REAL DO SEU ESTADO NO HTML
-  'frase02': { 
-    containerId: 'item1391', // ID do div onde a animação frase02.json será renderizada
-    path: './assets/frase02.json' // Caminho para o arquivo JSON da animação
-  }
-  // Se houver outras animações Lottie no seu projeto que usam esta mesma lógica
-  // e não estão relacionadas a este MSO, mantenha-as aqui.
-  // Caso contrário, você pode remover as configurações de animações não utilizadas.
+  'frase01': { containerId: 'item1364', path: './assets/frase01.json' },
+  'frase02': { containerId: 'item1391', path: './assets/frase02.json' },
+
+  'frase03': { containerId: 'item1609', path: './assets/frase03.json' },
+  'frase04': { containerId: 'item1636', path: './assets/frase04.json' }
 };
 
-// Função para ativar/desativar animações com base no estado ativo
+// Função para manipular a mudança de estado do MSO e reproduzir a animação Lottie correspondente
 function handleMultiStateChange() {
-  const multiStateElement = document.getElementById('item1330'); 
-  if (!multiStateElement) {
-    console.warn("MSO com ID 'item1330' não encontrado.");
-    return;
-  }
-
-  const states = multiStateElement.querySelectorAll('.pageItem.state');
+  const states = document.querySelectorAll('.pageItem.state');
 
   states.forEach(state => {
     const isActive = state.classList.contains('active') && state.getAttribute('aria-hidden') === 'false';
@@ -85,9 +71,11 @@ function handleMultiStateChange() {
 
 // Observador de mutação para detectar mudanças no atributo 'aria-hidden' ou na classe 'active'
 document.addEventListener('DOMContentLoaded', function() {
-  const slideshow = document.getElementById('item1330'); // ATUALIZADO: ID do MSO principal
-  if (slideshow) {
-    const observer = new MutationObserver(mutations => {
+  const slideshow1 = document.getElementById('item1330'); // Original ID from frases-01.js
+  const slideshow2 = document.getElementById('item1553'); // Original ID from frases-02.js
+
+  if (slideshow1) {
+    const observer1 = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
         if (mutation.type === 'attributes' && (mutation.attributeName === 'aria-hidden' || mutation.attributeName === 'class')) {
           const targetElement = mutation.target;
@@ -97,14 +85,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
-
-    observer.observe(slideshow, {
+    observer1.observe(slideshow1, {
       attributes: true,
       subtree: true,
       attributeFilter: ['aria-hidden', 'class']
     });
+  }
 
-    // Chamada inicial para configurar as animações com base no estado ativo padrão
-    handleMultiStateChange();
+  if (slideshow2) {
+    const observer2 = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.type === 'attributes' && (mutation.attributeName === 'aria-hidden' || mutation.attributeName === 'class')) {
+          const targetElement = mutation.target;
+          if (targetElement.classList.contains('state')) {
+            handleMultiStateChange();
+          }
+        }
+      });
+    });
+    observer2.observe(slideshow2, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ['aria-hidden', 'class']
+    });
   }
 });
