@@ -208,20 +208,6 @@ p.col-break-before::before {
 .scroll-vert-sumario::-webkit-scrollbar { -webkit-appearance:none; width:6px; border-radius:10px; background-color:rgba(0,0,0,.4);} /*add back scrollbar for webkit*/
 .scroll-vert-sumario::-webkit-scrollbar-thumb { border-radius:10px; background-color:#fff; }
 
-/* Barra Rolagem Firefox */
-.scroll-vert {
-  scrollbar-width: auto;
-  scrollbar-color: rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.2);
-}
-.scroll-vert-editorial {
-  scrollbar-width: auto;
-  scrollbar-color: #00C4EE #00000038;
-}
-.scroll-vert-sumario {
-  scrollbar-width: auto;
-  scrollbar-color: #fff rgba(0, 0, 0, 0.4);
-}
-
 .hidescroll::-webkit-scrollbar { display:none; }
 .hidescroll { -ms-overflow-style:none; overflow:-moz-scrollbars-none;/*old FF*/ }
 .pulltab-left, .pulltab-left > * {
