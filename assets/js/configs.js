@@ -1,4 +1,4 @@
-// /js/configs.js
+// configs.js
 
 export const msoConfigs = {
   item1330: {

@@ -1,9 +1,10 @@
-// /js/observerSetup.js
+// observerSetup.js
 
 import { handleMultiStateChange } from './stateController.js';
+import { msoConfigs } from './configs.js'; // ✅ Importe aqui
 
 export function setupMSO(msObjectId) {
-  const config = msoConfigs[msObjectId];
+  const config = msoConfigs[msObjectId]; // Agora funciona!
   if (!config) {
     console.warn(`Configuração não encontrada para o MSO: ${msObjectId}`);
     return;
@@ -32,6 +33,5 @@ export function setupMSO(msObjectId) {
     attributeFilter: ['aria-hidden', 'class']
   });
 
-  // Inicializa com o estado padrão
   handleMultiStateChange(msObjectId, config);
 }
